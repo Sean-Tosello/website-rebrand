@@ -2,34 +2,34 @@ name: Deploy to GitHub Pages
 
 on:
   push:
-    branches:
-      - main   # or your default branch
+    branches: [main]
+
+permissions:
+  contents: write
 
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
-        with:
-          persist-credentials: false  # otherwise, the token used is the GITHUB_TOKEN, which has limited permissions for pushing to gh-pages
+      - name: Checkout code
+        uses: actions/checkout@v4
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v3
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
         with:
-          node-version: '20.16.0'   # choose your Node.js version
+          node-version: '20'
 
       - name: Install dependencies
-        run: npm install
+        run: npm ci
 
-      - name: Build the site
-        run: npm run build
+      - name: Build site
+        run: |
+          npm run build
+          npm run export  # For Next.js — use only if you're doing static export
 
       - name: Deploy to gh-pages branch
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./next    # Change this to your build output folder like dist/, build/, out/
-          # user_name: 'github-actions[bot]'
-          # user_email: 'github-actions[bot]@users.noreply.github.com'
+          publish_dir: ./out  # or ./build or ./dist depending on your project
