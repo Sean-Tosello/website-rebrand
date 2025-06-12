@@ -6,18 +6,25 @@ interface Project {
   name: string
   link: string
   description: string
+  demo?: string
 }
 
 const projects: Project[] = [
   {
     name: "This Website!",
-    link: "#",
+    link: "https://github.com/Sean-Tosello/website-rebrand",
     description: "Built with Next.js, DaisyUI, and Tailwind CSS this website was custom built to showcase my experience and skills as both a Solutions Architect and Front End Engineer.",
   },
   {
     name: "Ravenous",
-    link: "#",
+    link: "https://github.com/Sean-Tosello/ravenous",
     description: "Codecademy Project: A Yelp-like application built with React, Redux, and the Yelp API. It allows users to search for restaurants and view details.",
+  },
+    {
+    name: "Further Demo App",
+    link: "https://github.com/Sean-Tosello/integration_specialist_exercise",
+    description: "A demo application for Further, showcasing integration with their API, Google Tag manager, and Google Analytics. Built with React and Next.js.",
+    demo: "https://integration-specialist-exercise.vercel.app/"
   },
 ]
 
@@ -52,6 +59,17 @@ export default function ProjectsPage() {
               See the Code!
               </a>
             </button>
+            {project.demo && (
+              <button className="btn btn-outline border-current shadow-lg rounded-none mt-4 block mx-auto">
+                <a
+                  href={project.demo}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  See the Demo!
+                </a>
+              </button>
+            )}
           </div>
         </div>
       ))}
